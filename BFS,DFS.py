@@ -303,3 +303,99 @@ visited1 = [[False]*N for _ in range(M)]
 print(Count0(graph,M,N), end=' ')
 print(Count1(graph,M,N), end=' ')
 '''
+'''
+# 4421. 단지 번호 붙이기
+from collections import deque
+
+dx = [-1,0,1,0]
+dy = [0,1,0,-1]
+result = []
+
+def BFS(n,a,b,arr,visited):
+    queue = deque([(a,b)])
+    visited[a][b] = True
+    size = 1
+    
+    while queue:
+        x,y = queue.popleft()
+        
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            
+            if 0<=nx<n and 0<=ny<n:
+                if not visited[nx][ny] and arr[nx][ny]==1:
+                    visited[nx][ny] = True
+                    queue.append((nx,ny))
+                    size += 1
+    result.append(size)
+
+def Home(n,arr,visited):
+    num = 0
+    for i in range(n):
+        for j in range(n):
+            if not visited[i][j] and arr[i][j] == 1:
+                BFS(n,i,j,arr,visited)
+                num += 1
+    result.sort()
+    print(num)
+    for x in result:
+        print(x)
+
+N = int(input())
+arr = [list(map(int,input().strip())) for _ in range(N)]    # 입력받을때 strip() 사용하여 공백 제거
+visited = [[False]*(N+1) for _ in range(N+1)]
+
+Home(N,arr,visited)
+'''
+'''
+# 4773. 토마토
+from collections import deque
+
+dx = [-1,0,1,0,0,0]
+dy = [0,1,0,-1,0,0]
+dz = [0,0,0,0,1,-1]
+
+def BFS(m,n,h,arr,visited,queue,remain):
+    day = 0
+    
+    while queue and remain > 0:
+        size = len(queue)
+        
+        for _ in range(size):
+            x,y,z = queue.popleft()
+            
+            for i in range(6):
+                nx = x + dx[i]
+                ny = y + dy[i]
+                nz = z + dz[i]
+                
+                if 0<=nx<H and 0<=ny<N and 0<=nz<M:
+                    if not visited[nx][ny][nz] and arr[nx][ny][nz]==0:
+                        visited[nx][ny][nz] = True
+                        remain -= 1
+                        queue.append((nx,ny,nz))
+        if remain >= 0:
+            day += 1
+    
+    return day if remain == 0 else -1
+
+def Tomato(m,n,h,arr,visited):
+    queue = deque()
+    remain = 0
+    for i in range(h):
+        for j in range(n):
+            for k in range(m):
+                if arr[i][j][k] == 1:
+                    queue.append((i,j,k))
+                    visited[i][j][k] = True
+                elif arr[i][j][k]==0:
+                    remain += 1
+    return BFS(m,n,h,arr,visited,queue,remain)
+
+M,N,H = map(int,input().split())
+arr = [[list(map(int, input().split())) for _ in range(N)] for _ in range(H)]
+visited = [[[False]*M for _ in range(N)] for _ in range(H)]
+
+print(Tomato(M,N,H,arr,visited))
+'''
