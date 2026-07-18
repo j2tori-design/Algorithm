@@ -113,30 +113,19 @@ arr = list(map(int,input().split()))
 backtrack(N,S,arr,0,0)
 print(count)
 '''
-
+'''
 # 4745. 부등호
 result = ''
-def backtrack(k,check,num,idx,cur):
-    global result
+num = 0
+def backtrack(k,check,idx,cur):
+    global result, num
     if len(result) == k+1:
         return result
     
-    result += str(num[cur])
-    visited[cur] = True
+    result += str(num)
     
-    if check[idx] == '<':
-        for x in num:
-            if num[cur] < x:
-                result += str(x)
-            backtrack(k,check,num,idx+1,cur+1)
-    else:
-        for x in num:
-            if num[cur] > x:
-                result += str(num[cur])
-        backtrack(k,check,num,idx+1,cur)
-        
 k = int(input())
 check = list(map(str, input().split()))
-num = [0,1,2,3,4,5,6,7,8,9]
-visited = [False]*k
-print(backtrack(k,check,num,0,0))
+
+print(backtrack(k,check,0,0))
+'''
