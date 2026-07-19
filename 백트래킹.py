@@ -117,15 +117,20 @@ print(count)
 # 4745. 부등호
 result = ''
 num = 0
-def backtrack(k,check,idx,cur):
+def backtrack(k,arr):
     global result, num
     if len(result) == k+1:
         return result
-    
-    result += str(num)
+    if arr[num] == '>':
+        num += 1
+        backtrack(k,arr)
+        result += str(num)
+    else:
+        num += 1
+        result += str(num)
+        backtrack(k,arr)
     
 k = int(input())
-check = list(map(str, input().split()))
-
-print(backtrack(k,check,0,0))
+arr = list(map(str, input().split()))
+print(backtrack(k,arr))
 '''
