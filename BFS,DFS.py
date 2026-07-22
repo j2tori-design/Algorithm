@@ -399,3 +399,28 @@ visited = [[[False]*M for _ in range(N)] for _ in range(H)]
 
 print(Tomato(M,N,H,arr,visited))
 '''
+
+# 4503.
+N = int(input())
+M = int(input())
+arr = [[] for _ in range(N+1)]
+visited = [False]*(N+1)
+count = 0
+for i in range(M):
+    x,y = map(int,input().split())
+    arr[x].append(y)
+    arr[y].append(x)
+
+def Birus(x, arr):
+    global count
+    if not arr[x]:
+        return
+    visited[x] = True
+    
+    for next in arr[x]:
+        if not visited[next]:
+            count += 1
+            Birus(next, arr)
+
+Birus(1,arr)
+print(count)
