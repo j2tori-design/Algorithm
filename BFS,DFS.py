@@ -399,8 +399,8 @@ visited = [[[False]*M for _ in range(N)] for _ in range(H)]
 
 print(Tomato(M,N,H,arr,visited))
 '''
-
-# 4503.
+'''
+# 4503. 바이러스
 N = int(input())
 M = int(input())
 arr = [[] for _ in range(N+1)]
@@ -424,3 +424,48 @@ def Birus(x, arr):
 
 Birus(1,arr)
 print(count)
+'''
+
+# 3212. 위상 정렬
+import heapq
+
+v,n = map(int,input().split())
+graph = [[] for _ in range(v+1)]
+degree = [0]*(v+1)
+
+for _ in range(n):
+    x,y = map(int, input().split())
+    graph[x].append(y)
+    degree[y] += 1
+
+def has_cycle(v,result):
+    if len(result) != v:
+        return True
+    else:
+        return False
+    
+def Topological(arr):
+    heap = []
+    for i in range(1,v+1):
+        if degree[i]==0:
+            heapq.heappush(heap, i)
+    
+    result = []
+    while heap:
+        now = heapq.heappop(heap)
+        result.append(now)
+        
+        for next in graph[now]:
+            degree[next] -= 1
+            if degree[next]==0:
+                heapq.heappush(heap, next)
+        
+    return result
+
+answer = Topological(graph)
+
+if has_cycle(v,answer):
+    print(-1)
+else:
+    for i in answer:
+        print(i)
