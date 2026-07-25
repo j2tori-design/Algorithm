@@ -349,6 +349,48 @@ visited = [[False]*(N+1) for _ in range(N+1)]
 Home(N,arr,visited)
 '''
 '''
+# 4421. 단지 번호 붙이기 (DFS)
+dx = [-1,0,1,0]
+dy = [0,1,0,-1]
+
+N = int(input())
+arr = []
+for _ in range(N):
+    arr.append(list(map(int,input().strip())))
+visited = [[False]*N for _ in range(N)]
+result = []
+count = 0
+
+def dfs(arr,i,j):
+    global count
+    visited[i][j] = True
+    count += 1
+    
+    for k in range(4):
+        x = i + dx[k]
+        y = j + dy[k]
+        if 0<=x<N and 0<=y<N:
+            if not visited[x][y] and arr[x][y]==1:
+                dfs(arr,x,y)
+
+def Map(arr):
+    global count
+    for i in range(N):
+        for j in range(N):
+            if not visited[i][j] and arr[i][j] == 1:
+                count = 0
+                dfs(arr,i,j)
+                result.append(count)
+                
+    return len(result), result
+
+count, result = Map(arr)
+result.sort()
+print(count)
+for num in result:
+    print(num)
+'''
+'''
 # 4773. 토마토
 from collections import deque
 
@@ -425,7 +467,7 @@ def Birus(x, arr):
 Birus(1,arr)
 print(count)
 '''
-
+'''
 # 3212. 위상 정렬
 import heapq
 
@@ -469,3 +511,4 @@ if has_cycle(v,answer):
 else:
     for i in answer:
         print(i)
+'''
