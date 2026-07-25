@@ -24,6 +24,28 @@ def backtracking(depth):
             
             undo_choice(next_candidate)       # 되돌아왔을 때 선택 복구 (상태 원상복구)
 '''
+# 2653. 규칙에 맞는 이진수 만들기
+n = int(input())
+num = ['0','1']
+bin_str = ""
+result = []
+
+def Binary(n,idx):
+    global bin_str
+    if idx==n:
+        result.append(bin_str)
+        return
+    for next in num:
+        if bin_str[idx]=='0':
+            bin_str += '1'
+            Binary(n,idx+1)
+        else:
+            bin_str += next
+            Binary(n,idx+1)
+    
+    return len(result)
+
+print(Binary(n,0))
 '''
 # 3520. 체커 도전
 N = int(input())
