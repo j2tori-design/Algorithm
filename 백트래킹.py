@@ -24,28 +24,40 @@ def backtracking(depth):
             
             undo_choice(next_candidate)       # 되돌아왔을 때 선택 복구 (상태 원상복구)
 '''
+'''
+# 2652. 극장 좌석 배치2
+n,k = map(int,input().split())
+num = 0
+
+def Theater(last,idx,count):
+    global num
+    if count==k:
+        num += 1
+        return
+    elif idx==n and count!=k:
+        return
+    Theater(0,idx+1,count)
+    if last!=1:
+        Theater(1,idx+1,count+1)
+    return num
+print(Theater(-1,0,0))
+'''
+'''
 # 2653. 규칙에 맞는 이진수 만들기
 n = int(input())
-num = ['0','1']
-bin_str = ""
-result = []
-
-def Binary(n,idx):
-    global bin_str
+count = 0
+def Binary(last,idx):
+    global count
     if idx==n:
-        result.append(bin_str)
+        count += 1
         return
-    for next in num:
-        if bin_str[idx]=='0':
-            bin_str += '1'
-            Binary(n,idx+1)
-        else:
-            bin_str += next
-            Binary(n,idx+1)
-    
-    return len(result)
+    Binary(1,idx+1)
+    if last!=0:
+        Binary(0,idx+1)
+    return count
 
-print(Binary(n,0))
+print(Binary(1,0))
+'''
 '''
 # 3520. 체커 도전
 N = int(input())
@@ -135,24 +147,21 @@ arr = list(map(int,input().split()))
 backtrack(N,S,arr,0,0)
 print(count)
 '''
-'''
+
 # 4745. 부등호
-result = ''
-num = 0
-def backtrack(k,arr):
-    global result, num
-    if len(result) == k+1:
-        return result
-    if arr[num] == '>':
-        num += 1
-        backtrack(k,arr)
-        result += str(num)
-    else:
-        num += 1
-        result += str(num)
-        backtrack(k,arr)
-    
 k = int(input())
-arr = list(map(str, input().split()))
-print(backtrack(k,arr))
-'''
+sign = list(map(str, input().split()))
+num = [0,1,2,3,4,5,6,7,8,9]
+
+def DFS(last,idx,result):
+    if idx==k:
+        return result
+    num.pop(last)
+    result += str(last)
+    DFS(last+1,idx+1,result)
+    if sign[idx]=='>':
+        if last-1 not in num:
+            DFS(last-1,idx+1,result)
+            result += str(last)
+
+print(DFS(0,0,''))
