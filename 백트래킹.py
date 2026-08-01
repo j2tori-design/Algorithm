@@ -59,28 +59,6 @@ def Binary(last,idx):
 print(Binary(1,0))
 '''
 '''
-# 3520. 체커 도전
-N = int(input())
-board = [[0]*(N+1) for _ in range(N+1)]
-visited = [False]*(N+1)
-result = []
-
-def DFS(arr,start):    # start = (i,j)
-    list = [start[1]]
-    if start[0] > N:
-        return
-    visited[start[1]] = True
-
-    for k in range(1,N+1):
-        if not visited[k] and abs(start[0]-start[1]) != abs(start[0]+1-k):
-            list.append(k)
-            DFS(arr,(start[0]+1,k))
-
-def Sol(arr):
-    for i in range(1,N+1):
-        result.append(DFS(arr,(1,i)))
-'''
-'''
 #2608. 동아리 회장 선거
 n = int(input())
 result = []
@@ -148,20 +126,53 @@ backtrack(N,S,arr,0,0)
 print(count)
 '''
 
+# 3520. 체커 도전
+N = int(input())
+board = [[0]*(N+1) for _ in range(N+1)]
+visited = [False]*(N+1)   # 열 방문 여부
+result = []
+row_col = []
+
+def DFS(arr,start,answer):
+    if start[0] == N+1:
+        result.append(answer)
+        return
+
+    for i in range(1,N+1):
+        if not visited[i]:
+            if start[0]-i not in row_col:
+                visited[i] = True
+                row_col.append(start[0]-i)
+                DFS(arr,(start[0]+1,i),answer+[i])
+                visited[i] = False
+                row_col.pop()
+    return result
+
+DFS(board,(1,1), [])
+for i in range(3):
+    print(*result[i])
+print(len(result))
+
+'''
 # 4745. 부등호
 k = int(input())
 sign = list(map(str, input().split()))
-num = [0,1,2,3,4,5,6,7,8,9]
+visited = [False]*10
+answer = []
 
-def DFS(last,idx,result):
-    if idx==k:
-        return result
-    num.pop(last)
-    result += str(last)
-    DFS(last+1,idx+1,result)
-    if sign[idx]=='>':
-        if last-1 not in num:
-            DFS(last-1,idx+1,result)
-            result += str(last)
+def DFS(idx,current):
+    if idx==k+1:
+        answer.append(current)
+        return
 
-print(DFS(0,0,''))
+    for i in range(10):
+        if not visited[i]:
+            if idx==0 or (sign[idx-1]=='<' and int(current[-1])<i) or (sign[idx-1]=='>' and int(current[-1])>i):
+                visited[i] = True
+                DFS(idx+1,current+str(i))
+                visited[i] = False
+
+DFS(0,"")
+print(answer[-1])
+print(answer[0])
+'''
