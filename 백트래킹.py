@@ -125,34 +125,38 @@ arr = list(map(int,input().split()))
 backtrack(N,S,arr,0,0)
 print(count)
 '''
-
+'''
 # 3520. 체커 도전
 N = int(input())
 board = [[0]*(N+1) for _ in range(N+1)]
 visited = [False]*(N+1)   # 열 방문 여부
 result = []
-row_col = []
+row_col1 = []
+row_col2 = []
 
-def DFS(arr,start,answer):
-    if start[0] == N+1:
+def DFS(start,answer):
+    if start == N+1:
         result.append(answer)
         return
 
     for i in range(1,N+1):
         if not visited[i]:
-            if start[0]-i not in row_col:
+            if (start-i not in row_col1) and (start+i not in row_col2):
                 visited[i] = True
-                row_col.append(start[0]-i)
-                DFS(arr,(start[0]+1,i),answer+[i])
+                row_col1.append(start-i)
+                row_col2.append(start+i)
+                
+                DFS(start+1,answer+[i])
+                
                 visited[i] = False
-                row_col.pop()
-    return result
+                row_col1.pop()
+                row_col2.pop()
 
-DFS(board,(1,1), [])
+DFS(1, [])
 for i in range(3):
     print(*result[i])
 print(len(result))
-
+'''
 '''
 # 4745. 부등호
 k = int(input())
