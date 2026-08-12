@@ -1,4 +1,4 @@
-## DP의 두가지 유형
+## Dynamic Programming의 두가지 유형
 # 1. Top-Down 방식: 재귀함수 + 메모이제이션
 #    재귀함수를 사용하면서 계산결과 저장
 '''
@@ -50,11 +50,11 @@ print(LIS(arr))
 # 3801. 오르막수
 N = int(input())
 dp = [1]*N
+count = 0
 
 def UpCount(N):
-    for i in range(N):
-        for j in range(i):
-            dp[i] = (dp[i] + dp[j])
-    return sum(dp) % 10007
-
+    global count
+    for i in range(N-1,-1,-1):
+        
+    return count
 print(UpCount(N))
