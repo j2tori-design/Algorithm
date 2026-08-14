@@ -93,13 +93,40 @@ print(UpCount(N))
 8 8~9 : 2+1*(1+2)
 9 9~9 : 1
 '''
-
+'''
 # 3740. 0/1 Knapsack Problem
+# - Greedy 알고리즘으로는 해결할 수 없는 문제
+# - Dynamic Programming을 이용하여 해결
 N,W = map(int,input().split())
-object = []
+# dp[W] : 용량이 W일 때 담을 수 있는 최대 무게
+dp = [0]*(W+1)
+
 for _ in range(N):
     w,v = map(int,input().split())
-    object.append((w,v))
 
-def Knapsack(object, W):
+    for j in range(W, w-1, -1):    # 역순 탐색
+        dp[j] = max(dp[j], dp[j-w] + v)
+        
+print(dp[W])
+'''
+
+# 4019. 동전 줍기
+N = int(input())
+coin = [0] + list(map(int, input().split()))
+
+def Coin(coin, N):
+    if N == 1:
+        return coin[1]
+    if N == 2:
+        return coin[1] + coin[2]
     
+    dp = [0]*(N+1)
+    dp[1] = coin[1]
+    dp[2] = coin[1] + coin[2]
+    
+    for i in range(3,N+1):
+        dp[i] = max(dp[i-1], dp[i-2] + coin[i], dp[i-3] + coin[i-1] + coin[i])
+   
+    return dp[N]
+
+print(Coin(coin, N))
