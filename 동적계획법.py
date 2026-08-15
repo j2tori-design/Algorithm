@@ -109,7 +109,7 @@ for _ in range(N):
         
 print(dp[W])
 '''
-
+'''
 # 4019. 동전 줍기
 N = int(input())
 coin = [0] + list(map(int, input().split()))
@@ -130,3 +130,4 @@ def Coin(coin, N):
     return dp[N]
 
 print(Coin(coin, N))
+'''
