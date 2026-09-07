@@ -1,5 +1,5 @@
 ## 다익스트라 알고리즘
-
+'''
 # 3216. 최단 경로
 import heapq
 INF = 10*1000000
@@ -46,6 +46,7 @@ else:
     print(total_dist)
     for node in total_path:
         print(node)
+'''
 '''
 # 3221. 파티
 import heapq
