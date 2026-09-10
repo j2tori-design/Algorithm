@@ -26,10 +26,23 @@ for idx in range(T):
     result.sort()
     print(f'#{idx+1} {result[k-1]}')
 '''
-
+'''
 # k번째 큰 수
 N, K = map(int, input().split())
 arr = list(map(int, input().split()))
 
 def K_big(n,k,arr):
-    
+'''
+
+# 대표값
+from operator import index
+
+N = int(input())
+arr = list(map(int, input().split()))
+
+def Represent(N, arr):
+    avg = round(sum(arr)/N)
+    result = [abs(x-avg) for x in arr]
+    return avg, index(min(result))
+
+print(*Represent(N, arr))
