@@ -28,21 +28,21 @@ for idx in range(T):
 '''
 '''
 # k번째 큰 수
+# 어떠한 기준으로 최대값을 구하는지
 N, K = map(int, input().split())
 arr = list(map(int, input().split()))
 
 def K_big(n,k,arr):
 '''
-
+'''
 # 대표값
-from operator import index
-
 N = int(input())
 arr = list(map(int, input().split()))
 
 def Represent(N, arr):
     avg = round(sum(arr)/N)
     result = [abs(x-avg) for x in arr]
-    return avg, index(min(result))
+    return avg, result.index(min(result))+1
 
-print(*Represent(N, arr))
+print(*Represent(N, arr))       # 왜 이상한 인덱스가 반환되는지...
+'''
