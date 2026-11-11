@@ -11,7 +11,7 @@ last = ord(y)-ord('A')
 
 way = [[] for _ in range(N)]
 for _ in range(M):
-    a,b,c = map(int,input().split())
+    a,b,c = input().split()
     start, end, value = ord(a)-ord('A'), ord(b)-ord('A'), int(c)
     way[start].append((end, value))
     way[end].append((start,value))
@@ -20,26 +20,34 @@ def ShortestPath(way, start, end):
     queue = [(0,start)]
     dist = [INF]*(N+1)
     dist[start] = 0
-    path = []
+    prev = [-1]*(N+1)   # 최단 경로에서 바로 이전 정점
     
     while queue:
         value,now = heapq.heappop(queue)
-        path.append(now+'A')
-        if now == end:
-            break
         if dist[now] < value:
             continue
+        if now == end:
+            break
         for i,j in way[now]:  # i:도착지, j:시간
             if value + j < dist[i]:
                 dist[i] = value + j
+                prev[i] = now
                 heapq.heappush(queue, (dist[i], i))
                 
     if dist[end] == INF:
         return -1, []
     
+    # 도착지에서 prev를 거슬러 올라가 경로 복원
+    path = []
+    node = end
+    while node != -1:
+        path.append(chr(node+ord('A')))
+        node = prev[node]
+    path.reverse()
+    
     return dist[end], path
     
-total_dist, total_path = ShortestPath(way,first-'A',last-'A')
+total_dist, total_path = ShortestPath(way,first,last)
 if total_dist==-1:
     print(-1)
 else:
