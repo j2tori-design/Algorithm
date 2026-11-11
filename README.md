@@ -11,3 +11,7 @@
 | 구현 · 자료구조 기초 | [코드구현능력.py](코드구현능력.py), [자료구조와 알고리즘.py](자료구조와%20알고리즘.py) |
 
 각 파일은 문제별로 주석으로 구분되어 있습니다.
+
+---
+
+👤 [전건우 GitHub 프로필](https://github.com/j2tori-design) · 📂 [전체 프로젝트 목차](https://github.com/j2tori-design/contest-portfolio)
